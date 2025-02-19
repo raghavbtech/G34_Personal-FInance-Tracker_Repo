@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <style>
+    /* Navbar css */
+
+    .navbar {
+      background: linear-gradient(
+        135deg,
+        rgba(0, 0, 0, 0.95),
+        rgba(0, 0, 0, 0.85)
+      );
+
+      padding: 1rem 2rem;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      box-shadow: 0 2px 20px rgba(76, 175, 80, 0.2);
+      backdrop-filter: blur(10px);
+    }
+
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-family: "Raleway", sans-serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: white;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      position: relative;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .logo i {
+      color: #4caf50;
+      filter: drop-shadow(0 0 8px rgba(76, 175, 80, 0.6));
+    }
+
+    .logo:hover i {
+      animation: pulse 1.5s infinite;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      align-items: center;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: white;
+      font-weight: 500;
+      position: relative;
+      padding: 0.5rem 0;
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+      font-size: 0.9rem;
+      letter-spacing: 0.5px;
+    }
+
+    .nav-links a::before {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: #4caf50;
+      transition: width 0.3s ease;
+      box-shadow: 0 0 10px #4caf50;
+    }
+
+    .nav-links a:hover {
+      color: #4caf50;
+      text-shadow: 0 0 10px rgba(76, 175, 80, 0.3);
+    }
+
+    .nav-links a:hover::before {
+      width: 100%;
+    }
+
+    .auth-buttons {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+    }
+
+    .login-btn,
+    .signup-btn {
+      padding: 0.8rem 1.8rem;
+      border-radius: 50px;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      font-size: 0.9rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .login-btn {
+      background: transparent;
+      border: 2px solid #4caf50;
+      color: #4caf50;
+    }
+
+    .signup-btn {
+      background: #4caf50;
+      border: 2px solid #4caf50;
+      color: white;
+    }
+
+    .login-btn:hover,
+    .signup-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 0 20px rgba(76, 175, 80, 0.4);
+    }
+
+    .login-btn::after,
+    .signup-btn::after {
+      content: "";
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: rgba(255, 255, 255, 0.1);
+      transform: rotate(45deg);
+      transition: all 0.3s ease;
+      opacity: 0;
+    }
+
+    .login-btn:hover::after,
+    .signup-btn:hover::after {
+      opacity: 1;
+      animation: glowSweep 1.5s infinite;
+    }
+
+    .hamburger {
+      display: none;
+      cursor: pointer;
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      color: white;
+    }
+
+    @keyframes pulse {
+      0% {
+        transform: scale(1);
+        filter: drop-shadow(0 0 8px rgba(76, 175, 80, 0.6));
+      }
+      50% {
+        transform: scale(1.1);
+        filter: drop-shadow(0 0 12px rgba(76, 175, 80, 0.8));
+      }
+      100% {
+        transform: scale(1);
+        filter: drop-shadow(0 0 8px rgba(76, 175, 80, 0.6));
+      }
+    }
+
+    @keyframes glowSweep {
+      0% {
+        transform: rotate(45deg) translateX(-100%);
+      }
+      100% {
+        transform: rotate(45deg) translateX(100%);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .hamburger {
+        display: block;
+      }
+
+      .nav-links {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: linear-gradient(
+          135deg,
+          rgba(0, 0, 0, 0.95),
+          rgba(0, 0, 0, 0.85)
+        );
+        flex-direction: column;
+        padding: 1.5rem;
+        gap: 1.2rem;
+        box-shadow: 0 2px 20px rgba(0, 0, 0, 0.2);
+      }
+
+      .nav-links.active {
+        display: flex;
+        animation: slideDown 0.4s ease forwards;
+      }
+
+      .auth-buttons {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        gap: 1rem;
+        margin-top: 1.2rem;
+      }
+
+      .auth-buttons.active {
+        display: flex;
+        animation: slideDown 0.4s ease forwards;
+      }
+
+      .login-btn,
+      .signup-btn {
+        width: 100%;
+        text-align: center;
+      }
+    }
+
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* footer */
+    .footer {
+      background: linear-gradient(
+        135deg,
+        rgba(0, 0, 0, 0.95),
+        rgba(0, 0, 0, 0.85)
+      );
+      color: white;
+      padding: 70px 0 30px;
+      text-align: center;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.1);
+      margin-top: auto;
+    }
+
+    .footer-container {
+      display: flex;
+      justify-content: space-around;
+      flex-wrap: wrap;
+      max-width: 1200px;
+      margin: auto;
+      padding: 0 20px;
+    }
+
+    .footer-section {
+      flex: 1;
+      margin: 20px;
+      min-width: 250px;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 0.6s ease forwards;
+    }
+
+    .footer-section.about {
+      animation-delay: 0.2s;
+    }
+
+    .footer-section.links {
+      animation-delay: 0.4s;
+    }
+
+    .footer-section.social {
+      animation-delay: 0.6s;
+    }
+
+    .footer-section.newsletter {
+      animation-delay: 0.8s;
+    }
+
+    .footer-section h2 {
+      font-family: "Raleway", sans-serif;
+      margin-bottom: 20px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: #4caf50;
+    }
+
+    .footer-section h3 {
+      font-family: "Raleway", sans-serif;
+      margin-bottom: 20px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .footer-section p {
+      font-size: 15px;
+      line-height: 1.8;
+      color: rgba(255, 255, 255, 0.9);
+      margin-bottom: 20px;
+    }
+
+    .footer-section ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .footer-section ul li {
+      margin: 12px 0;
+    }
+
+    .footer-section ul li a {
+      text-decoration: none;
+      color: white;
+      transition: all 0.3s ease;
+      position: relative;
+      font-size: 15px;
+    }
+
+    .footer-section ul li a::after {
+      content: "";
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: -4px;
+      left: 0;
+      background-color: #4caf50;
+      transition: width 0.3s ease;
+    }
+
+    .footer-section ul li a:hover {
+      color: #4caf50;
+    }
+
+    .footer-section ul li a:hover::after {
+      width: 100%;
+    }
+
+    .social-icons {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+    }
+
+    .social-icons a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      transition: all 0.3s ease;
+    }
+
+    .social-icons a:hover {
+      background: #4caf50;
+      transform: translateY(-5px);
+    }
+
+    .newsletter-form {
+      display: flex;
+      gap: 10px;
+      max-width: 400px;
+      margin: 20px auto;
+    }
+
+    .newsletter-form input {
+      flex: 1;
+      padding: 12px;
+      border: none;
+      border-radius: 5px;
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      font-family: "Poppins", sans-serif;
+    }
+
+    .newsletter-form input::placeholder {
+      color: rgba(255, 255, 255, 0.6);
+    }
+
+    .newsletter-form button {
+      padding: 12px 25px;
+      border: none;
+      border-radius: 5px;
+      background: #4caf50;
+      color: white;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-family: "Poppins", sans-serif;
+    }
+
+    .newsletter-form button:hover {
+      background: #45a049;
+      transform: translateY(-2px);
+    }
+
+    .footer-bottom {
+      margin-top: 50px;
+      padding-top: 20px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .footer-bottom p {
+      font-size: 14px;
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .footer-section {
+        min-width: 100%;
+        margin: 20px 10px;
+      }
+
+      .newsletter-form {
+        flex-direction: column;
+      }
+    }
+  </style>
+  <body>
+    <div class="navbar">
+      <nav class="navbar">
+        <div class="nav-container">
+          <a href="#" class="logo">
+            <i class="fas fa-chart-line"></i>
+            Finance Tracker
+          </a>
+
+          <button class="hamburger" onclick="toggleMenu()">
+            <i class="fas fa-bars"></i>
+          </button>
+
+          <div class="nav-links">
+            <a href="{{url_for('home')}}">Home</a>
+            <a href="{{url_for('financetracker')}}">Use Tracker</a>
+            <a href="{{url_for('about')}}">About Us</a>
+            <a href="{{url_for('contact')}}">Contact</a>
+          </div>
+
+          <div class="auth-buttons">
+            {% if current_user.is_authenticated %}
+            <button class="signup-btn">
+              <a href="{{url_for('profile')}}">Profile</a>
+            </button>
+            <button class="login-btn">
+              <a href="{{url_for('logout')}}">Logout</a>
+            </button>
+            {%else%}
+            <button class="login-btn">
+              <a href="{{url_for('login')}}" style="text-decoration: none; color: white;">Login</a>
+            </button>
+            <button class="signup-btn">
+              <a href="{{url_for('register')}}" style="text-decoration: none; color: white;">Sign-Up</a>
+            </button>
+            {%endif%}
+          </div>
+        </div>
+      </nav>
+    </div>
+    <div class="container">{%block content%} {%endblock%}</div>
+    <div class="footer">
+      <!-- FOOTER SECTION  -->
+
+      <footer class="footer">
+        <div class="footer-container">
+          <div class="footer-section about">
+            <h2>Finance Tracker</h2>
+            <p>
+              Take control of your financial future with our intuitive tracking
+              tools. Smart budgeting, real-time insights, and personalized
+              recommendations to help you achieve your financial goals.
+            </p>
+          </div>
+
+          <div class="footer-section links">
+            <h3>Quick Links</h3>
+            <ul>
+              <li><a href="#">Home</a></li>
+              <li><a href="tracker.html">Use Tracker</a></li>
+              <li><a href="about.html">About Us</a></li>
+              <li><a href="contact.html">Contact Us</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-section social">
+            <h3>Connect With Us</h3>
+            <div class="social-icons">
+              <a href="#"><i class="fab fa-facebook-f"></i></a>
+              <a href="#"><i class="fab fa-twitter"></i></a>
+              <a href="#"><i class="fab fa-instagram"></i></a>
+              <a href="#"><i class="fab fa-linkedin-in"></i></a>
+            </div>
+          </div>
+
+          <div class="footer-section newsletter">
+            <h3>Stay Updated</h3>
+            <p>Subscribe to our newsletter for financial tips and updates.</p>
+            <form class="newsletter-form">
+              <input type="email" placeholder="Enter your email" />
+              <button type="submit">Subscribe</button>
+            </form>
+          </div>
+        </div>
+
+        <div class="footer-bottom">
+          <p>&copy; 2025 Finance Tracker. All rights reserved.</p>
+        </div>
+      </footer>
+    </div>
+  </body>
+</html>

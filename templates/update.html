@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Update Transaction</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="styles.css" />
+
+    <style>
+      /* Import Google Fonts */
+      @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap");
+
+      /* Modern Reset & Base Styles */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Poppins", sans-serif;
+        background: linear-gradient(135deg, #f6f9fc 0%, #e9f2f9 100%);
+        min-height: 100vh;
+        padding: 2rem;
+        color: #2d3748;
+      }
+
+      .container {
+        max-width: 1000px;
+        margin: 0 auto;
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 20px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        backdrop-filter: blur(10px);
+        padding: 2rem;
+      }
+
+      /* Enhanced Header Styles */
+      h2 {
+        font-size: 2.5rem;
+        text-align: center;
+        color: #2b6cb0;
+        margin-bottom: 2rem;
+        position: relative;
+        text-shadow: 2px 2px 4px rgba(43, 108, 176, 0.1);
+      }
+
+      h2::after {
+        content: "";
+        display: block;
+        width: 60px;
+        height: 4px;
+        background: linear-gradient(90deg, #2b6cb0, #4299e1);
+        margin: 0.5rem auto;
+        border-radius: 2px;
+      }
+
+      /* Modern Table Styles */
+      table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0;
+        margin: 2rem 0;
+        background: white;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+      }
+
+      th {
+        background: linear-gradient(90deg, #2b6cb0, #4299e1);
+        color: white;
+        padding: 1.2rem 1rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        font-size: 0.9rem;
+        position: relative;
+      }
+
+      td {
+        padding: 1rem;
+        border-bottom: 1px solid #e2e8f0;
+        font-size: 0.95rem;
+      }
+
+      tr:last-child td {
+        border-bottom: none;
+      }
+
+      tr:hover {
+        background: linear-gradient(
+          90deg,
+          rgba(43, 108, 176, 0.05),
+          rgba(66, 153, 225, 0.05)
+        );
+        transition: all 0.3s ease;
+      }
+
+      /* Enhanced Button Styles */
+      .btn {
+        padding: 0.7rem 1.2rem;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: 500;
+        font-size: 0.9rem;
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        text-decoration: none;
+      }
+
+      .btn i {
+        font-size: 1rem;
+      }
+
+      .btn-add {
+        background: linear-gradient(135deg, #48bb78, #38a169);
+        color: white;
+      }
+
+      .btn-update {
+        background: linear-gradient(135deg, #4299e1, #2b6cb0);
+        color: white;
+      }
+
+      .btn-delete {
+        background: linear-gradient(135deg, #f56565, #c53030);
+        color: white;
+      }
+
+      .btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      }
+
+      /* Modern Form Styles */
+      form {
+        background: white;
+        padding: 2rem;
+        border-radius: 12px;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+        margin-top: 2rem;
+      }
+
+      input[type="text"],
+      input[type="number"] {
+        width: 100%;
+        padding: 0.8rem 1rem;
+        margin: 0.5rem 0 1rem;
+        border: 2px solid #e2e8f0;
+        border-radius: 8px;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+      }
+
+      input[type="text"]:focus,
+      input[type="number"]:focus {
+        border-color: #4299e1;
+        box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.2);
+        outline: none;
+      }
+
+      /* Amount Column Styling */
+      td:nth-child(2) {
+        font-weight: 600;
+        color: #2d3748;
+      }
+
+      /* Actions Column Styling */
+      .actions {
+        display: flex;
+        gap: 0.5rem;
+      }
+
+      /* Responsive Design */
+      @media (max-width: 768px) {
+        body {
+          padding: 1rem;
+        }
+
+        .container {
+          padding: 1rem;
+        }
+
+        table {
+          display: block;
+          overflow-x: auto;
+        }
+
+        .btn {
+          padding: 0.5rem 1rem;
+        }
+
+        td,
+        th {
+          padding: 0.8rem;
+        }
+      }
+
+      /* Animation for New Transactions */
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      tr {
+        animation: fadeIn 0.3s ease-out;
+      }
+
+      /* Form Label Styles */
+      label {
+        display: block;
+        margin-bottom: 0.3rem;
+        color: #4a5568;
+        font-weight: 500;
+      }
+
+      /* Add Transaction Section Styling */
+      h3 {
+        color: #2d3748;
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+        position: relative;
+      }
+
+      h3::after {
+        content: "";
+        display: block;
+        width: 40px;
+        height: 3px;
+        background: linear-gradient(90deg, #2b6cb0, #4299e1);
+        margin-top: 0.5rem;
+        border-radius: 2px;
+      }
+      
+.footer{
+    width: 1500px;
+}
+.footer button{
+    margin-left: 70px;
+}
+
+    </style>
+  </head>
+  <body>
+    {%extends "base.html"%}
+    {%block content%}
+    <div class="container">
+      <h2>Update Transaction</h2>
+
+      <form
+        action="{{ url_for('update_transaction', id=transaction.id) }}"
+        method="POST"
+      >
+        <label for="category">Category:</label>
+        <input
+          type="text"
+          name="category"
+          id="category"
+          value="{{ transaction.category }}"
+          required
+        />
+
+        <label for="amount">Amount:</label>
+        <input
+          type="number"
+          name="amount"
+          id="amount"
+          step="0.01"
+          value="{{ transaction.amount }}"
+          required
+        />
+
+        <label for="description">Description:</label>
+        <input
+          type="text"
+          name="description"
+          id="description"
+          value="{{ transaction.description }}"
+        />
+
+        <button type="submit" class="btn btn-update">Update Transaction</button>
+        <a href="{{ url_for('financetracker') }}" class="btn btn-cancel">Cancel</a>
+      </form>
+    </div>
+    {%endblock%}
+  </body>
+</html>

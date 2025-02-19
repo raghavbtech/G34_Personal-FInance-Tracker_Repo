@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      }
+
+      @keyframes gradientAnimation {
+        0% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
+        100% {
+          background-position: 0% 50%;
+        }
+      }
+
+      @keyframes floatUp {
+        0% {
+          opacity: 0;
+          transform: translateY(30px);
+        }
+        100% {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes pulse {
+        0% {
+          box-shadow: 0 0 0 0 rgba(67, 206, 162, 0.4);
+        }
+        70% {
+          box-shadow: 0 0 0 15px rgba(67, 206, 162, 0);
+        }
+        100% {
+          box-shadow: 0 0 0 0 rgba(67, 206, 162, 0);
+        }
+      }
+
+      @keyframes shimmer {
+        0% {
+          background-position: -100% 0;
+        }
+        100% {
+          background-position: 200% 0;
+        }
+      }
+
+      body {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        background: linear-gradient(-45deg, #43cea2, #185a9d, #2b5876, #4e4376);
+        background-size: 400% 400%;
+        animation: gradientAnimation 15s ease infinite;
+        position: relative;
+        overflow-x: hidden;
+      }
+
+      body::before {
+        content: "";
+        position: absolute;
+        top: -10%;
+        left: -10%;
+        width: 120%;
+        height: 120%;
+        background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'%3E%3Cpath fill='rgba(255, 255, 255, 0.05)' d='M0,64L48,80C96,96,192,128,288,128C384,128,480,96,576,90.7C672,85,768,107,864,122.7C960,139,1056,149,1152,138.7C1248,128,1344,96,1392,80L1440,64L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z'%3E%3C/path%3E%3C/svg%3E");
+        background-size: cover;
+        background-position: center;
+        z-index: 0;
+        animation: floatUp 2s ease-out forwards;
+        pointer-events: none;
+      }
+
+      .login-container {
+        background: rgba(255, 255, 255, 0.95);
+        padding: 2rem;
+        border-radius: 20px;
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+        width: 500px;
+        margin-top: 125px;
+        margin-bottom: 125px;
+        min-height: 70vh; /* Ensures the container does not get too small */
+        position: relative;
+        z-index: 1;
+        animation: floatUp 1s ease-out forwards;
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        overflow: hidden;
+      }
+
+      .login-container::before {
+        content: "";
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(
+          circle,
+          rgba(255, 255, 255, 0.3) 0%,
+          transparent 70%
+        );
+        opacity: 0;
+        z-index: -1;
+        transition: opacity 0.5s ease;
+        pointer-events: none;
+      }
+
+      .login-container:hover::before {
+        opacity: 1;
+      }
+
+      .login-header {
+        text-align: center;
+        margin-bottom: 2rem;
+        animation: floatUp 1.2s ease-out forwards;
+      }
+
+      .login-header h1 {
+        color: #185a9d;
+        font-size: 2rem;
+        margin-bottom: 0.5rem;
+        position: relative;
+        display: inline-block;
+      }
+
+      .login-header h1::after {
+        content: "";
+        position: absolute;
+        bottom: -10px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 0;
+        height: 3px;
+        background: linear-gradient(to right, #43cea2, #185a9d);
+        transition: width 0.8s ease;
+      }
+
+      .login-container:hover .login-header h1::after {
+        width: 100%;
+      }
+
+      .login-header p {
+        color: #666;
+        font-size: 0.9rem;
+        opacity: 0;
+        animation: floatUp 1.4s ease-out forwards 0.2s;
+      }
+
+      .form-group {
+        margin-bottom: 1.5rem;
+        opacity: 0;
+        transform: translateY(20px);
+        animation: floatUp 1s ease-out forwards;
+      }
+
+      .form-group:nth-child(1) {
+        animation-delay: 0.3s;
+      }
+
+      .form-group:nth-child(2) {
+        animation-delay: 0.5s;
+      }
+
+      .form-group label {
+        display: block;
+        margin-bottom: 0.5rem;
+        color: #333;
+        font-weight: 500;
+        position: relative;
+        padding-left: 5px;
+        transform: translateX(0);
+        transition: transform 0.3s ease, color 0.3s ease;
+      }
+
+      .form-group:hover label {
+        transform: translateX(8px);
+        color: #43cea2;
+      }
+
+      .form-group input {
+        width: 100%;
+        padding: 0.8rem;
+        border: 2px solid #e1e1e1;
+        border-radius: 10px;
+        font-size: 1rem;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        background: rgba(255, 255, 255, 0.9);
+      }
+
+      .form-group input:focus {
+        outline: none;
+        border-color: #43cea2;
+        box-shadow: 0 0 0 3px rgba(67, 206, 162, 0.1);
+        transform: scale(1.02);
+        animation: pulse 2s infinite;
+      }
+
+      .form-group input::placeholder {
+        color: #bbbbbb;
+        transition: opacity 0.3s ease;
+      }
+
+      .form-group input:focus::placeholder {
+        opacity: 0.5;
+        transform: translateX(10px);
+      }
+
+      .remember-me {
+        display: flex;
+        align-items: center;
+        margin-bottom: 1.5rem;
+        opacity: 0;
+        animation: floatUp 1s ease-out forwards 0.7s;
+        position: relative;
+      }
+
+      .remember-me input {
+        margin-right: 0.5rem;
+        position: relative;
+        appearance: none;
+        width: 18px;
+        height: 18px;
+        border: 2px solid #e1e1e1;
+        border-radius: 4px;
+        outline: none;
+        transition: all 0.3s ease;
+        cursor: pointer;
+      }
+
+      .remember-me input:checked {
+        background-color: #43cea2;
+        border-color: #43cea2;
+      }
+
+      .remember-me input:checked::before {
+        content: "✓";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: white;
+        font-size: 12px;
+      }
+
+      .remember-me label {
+        cursor: pointer;
+        transition: color 0.3s ease;
+      }
+
+      .remember-me:hover label {
+        color: #43cea2;
+      }
+
+      .login-button {
+        width: 100%;
+        padding: 1rem;
+        background: linear-gradient(to right, #43cea2, #185a9d);
+        background-size: 200% auto;
+        color: white;
+        border: none;
+        border-radius: 10px;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.5s ease;
+        opacity: 0;
+        animation: floatUp 1s ease-out forwards 0.9s;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .login-button::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          90deg,
+          rgba(255, 255, 255, 0) 0%,
+          rgba(255, 255, 255, 0.2) 50%,
+          rgba(255, 255, 255, 0) 100%
+        );
+        animation: shimmer 2.5s infinite;
+      }
+
+      .login-button:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 7px 14px rgba(67, 206, 162, 0.3);
+        background-position: right center;
+      }
+
+      .login-button:active {
+        transform: translateY(1px);
+      }
+
+      .forgot-password {
+        text-align: center;
+        margin-top: 1rem;
+        opacity: 0;
+        animation: floatUp 1s ease-out forwards 1.1s;
+      }
+
+      .forgot-password a {
+        color: #185a9d;
+        text-decoration: none;
+        font-size: 0.9rem;
+        position: relative;
+        transition: color 0.3s ease;
+      }
+
+      .forgot-password a::after {
+        content: "";
+        position: absolute;
+        width: 0;
+        height: 1px;
+        bottom: -2px;
+        left: 0;
+        background-color: #43cea2;
+        transition: width 0.3s ease;
+      }
+
+      .forgot-password a:hover {
+        color: #43cea2;
+      }
+
+      .forgot-password a:hover::after {
+        width: 100%;
+      }
+
+      /* Animated particles */
+      @keyframes float {
+        0% {
+          transform: translateY(0px) rotate(0deg);
+          opacity: 1;
+        }
+        100% {
+          transform: translateY(-100px) rotate(720deg);
+          opacity: 0;
+        }
+      }
+
+      .particles {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        z-index: 0;
+        pointer-events: none;
+      }
+
+      .particle {
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: 50%;
+        animation: float 10s infinite linear;
+      }
+
+      /* Ensure footer is properly visible */
+      .footer {
+        margin-top: auto;
+        text-align: center;
+        padding: 1rem;
+        background: rgba(0, 0, 0, 0.1);
+        width: 100%;
+        color: white;
+        position: relative;
+        z-index: 1;
+        backdrop-filter: blur(5px);
+        animation: floatUp 1.5s ease-out forwards;
+      }
+    </style>
+  </head>
+  <body>
+    {% extends "base.html" %} {% block content %}
+
+    <!-- Particle background -->
+    <div class="particles">
+      <div
+        class="particle"
+        style="left: 10%; top: 20%; animation-duration: 8s"
+      ></div>
+      <div
+        class="particle"
+        style="left: 20%; top: 80%; animation-duration: 9s"
+      ></div>
+      <div
+        class="particle"
+        style="left: 30%; top: 30%; animation-duration: 7.5s"
+      ></div>
+      <div
+        class="particle"
+        style="left: 40%; top: 70%; animation-duration: 10s"
+      ></div>
+      <div
+        class="particle"
+        style="left: 65%; top: 15%; animation-duration: 11s"
+      ></div>
+      <div
+        class="particle"
+        style="left: 75%; top: 55%; animation-duration: 8.5s"
+      ></div>
+      <div
+        class="particle"
+        style="left: 85%; top: 25%; animation-duration: 9.5s"
+      ></div>
+      <div
+        class="particle"
+        style="left: 90%; top: 90%; animation-duration: 12s"
+      ></div>
+    </div>
+
+    <div class="login-container">
+      <div class="login-header">
+        <h1>Welcome Back!</h1>
+        <p>Log in to track your finances</p>
+      </div>
+      <form method="POST" action="{{ url_for('login') }}">
+        <div class="form-group">
+          <label for="email">Email Address</label>
+          <input
+            type="email"
+            id="email"
+            required
+            placeholder="Enter your email"
+            name="email"
+          />
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input
+            type="password"
+            id="password"
+            required
+            placeholder="Enter your password"
+            name="password"
+          />
+        </div>
+        <div class="remember-me">
+          <input type="checkbox" id="remember" />
+          <label for="remember">Remember me</label>
+        </div>
+        <button type="submit" class="login-button">Log In</button>
+        <div class="forgot-password">
+          <a href="#">Forgot Password?</a>
+        </div>
+      </form>
+    </div>
+
+    {% endblock %}
+  </body>
+</html>

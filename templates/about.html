@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>About Us - Personal Finance Tracker</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      }
+
+      body {
+        background: linear-gradient(135deg, #1a1a2e, #16213e);
+        color: #fff;
+        line-height: 1.6;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 2rem;
+      }
+
+      .hero {
+        text-align: center;
+        padding: 4rem 0;
+        animation: fadeIn 1s ease-in;
+      }
+
+      .hero h1 {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+        color: #4ecca3;
+      }
+
+      .hero p {
+        font-size: 1.2rem;
+        color: #eeeeee;
+        max-width: 800px;
+        margin: 0 auto;
+      }
+
+      .cards-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+        margin-top: 4rem;
+      }
+
+      .card {
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 15px;
+        padding: 2rem;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        position: relative;
+        overflow: hidden;
+        backdrop-filter: blur(10px);
+      }
+
+      .card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+      }
+
+      .card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          45deg,
+          transparent,
+          rgba(78, 204, 163, 0.1)
+        );
+        transform: translateX(-100%);
+        transition: transform 0.6s ease;
+      }
+
+      .card:hover::before {
+        transform: translateX(100%);
+      }
+
+      .card h3 {
+        color: #4ecca3;
+        margin-bottom: 1rem;
+        font-size: 1.5rem;
+      }
+
+      .card p {
+        color: #eeeeee;
+      }
+
+      .features {
+        margin-top: 4rem;
+        text-align: center;
+        animation: slideUp 1s ease-out;
+      }
+
+      .features h2 {
+        color: #4ecca3;
+        margin-bottom: 2rem;
+        font-size: 2.5rem;
+      }
+
+      .feature-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 2rem;
+        margin-top: 2rem;
+      }
+
+      .feature-item {
+        padding: 1.5rem;
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 10px;
+        transition: transform 0.3s ease;
+      }
+
+      .feature-item:hover {
+        transform: scale(1.05);
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      @keyframes slideUp {
+        from {
+          transform: translateY(50px);
+          opacity: 0;
+        }
+        to {
+          transform: translateY(0);
+          opacity: 1;
+        }
+      }
+
+      .stats {
+        display: flex;
+        justify-content: space-around;
+        margin-top: 4rem;
+        flex-wrap: wrap;
+        gap: 2rem;
+      }
+
+      .stat-item {
+        text-align: center;
+        animation: fadeIn 1s ease-in;
+      }
+
+      .stat-number {
+        font-size: 2.5rem;
+        color: #4ecca3;
+        margin-bottom: 0.5rem;
+      }
+
+      .stat-label {
+        color: #eeeeee;
+      }
+    </style>
+  </head>
+  <body>
+    {% extends "base.html" %}
+    {% block content %}
+    <div class="container">
+      <section class="hero">
+        <h1>About Personal Finance Tracker</h1>
+        <p>
+          Empowering individuals to take control of their financial future
+          through smart tracking and intelligent insights.
+        </p>
+      </section>
+
+      <div class="cards-container">
+        <div class="card">
+          <h3>Our Mission</h3>
+          <p>
+            We believe everyone deserves financial freedom. Our mission is to
+            provide simple yet powerful tools that make managing personal
+            finances accessible to all.
+          </p>
+        </div>
+        <div class="card">
+          <h3>Our Vision</h3>
+          <p>
+            To become the world's most trusted personal finance platform by
+            helping millions achieve their financial goals through innovative
+            technology.
+          </p>
+        </div>
+        <div class="card">
+          <h3>Our Values</h3>
+          <p>
+            Security, transparency, and user empowerment are at the core of
+            everything we do. Your financial journey is our top priority.
+          </p>
+        </div>
+      </div>
+
+      <section class="features">
+        <h2>Why Choose Us</h2>
+        <div class="feature-grid">
+          <div class="feature-item">
+            <h3>Smart Analytics</h3>
+            <p>
+              Advanced insights into your spending patterns and financial
+              habits.
+            </p>
+          </div>
+          <div class="feature-item">
+            <h3>Bank-Level Security</h3>
+            <p>
+              Your data is protected with state-of-the-art encryption and
+              security measures.
+            </p>
+          </div>
+          <div class="feature-item">
+            <h3>Easy to Use</h3>
+            <p>
+              Intuitive interface designed for both beginners and advanced
+              users.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <div class="stats">
+        <div class="stat-item">
+          <div class="stat-number">100K+</div>
+          <div class="stat-label">Active Users</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">$10M+</div>
+          <div class="stat-label">Savings Tracked</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">4.8/5</div>
+          <div class="stat-label">User Rating</div>
+        </div>
+      </div>
+    </div>
+    {% endblock %}
+  </body>
+</html>

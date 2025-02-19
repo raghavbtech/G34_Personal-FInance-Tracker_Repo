@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Banking Dashboard</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      /* body { */
+        /* background: #f0f2f5; */
+        /* background: black;
+        min-height: 100vh;
+        width: 100%;
+        display: flex;
+        align-items: flex-start;
+        justify-content: center;
+        padding: 2rem 1rem;
+      } */
+/* 
+      .main-container {
+        width: 100%;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 15px;
+      } */
+
+      body {
+    background: black;
+    min-height: 100vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column; /* Add this */
+    margin: 0; /* Add this */
+    padding: 0; /* Reset padding */
+}
+
+/* Update main-container styles */
+.main-container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 15px;
+    flex: 1 0 auto; /* Add this */
+}
+
+/* Add footer styles */
+footer {
+    flex-shrink: 0; /* Add this */
+    width: 100%;
+    background: #1a1a1a;
+    color: white;
+    padding: 1rem 0;
+    margin-top: auto; /* Add this */
+}
+
+
+
+
+
+      .card {
+        background: white;
+        border-radius: 16px;
+        border: none;
+        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+        margin-bottom: 1.5rem;
+      }
+
+      .summary-header {
+        position: relative;
+        padding: 2rem;
+        background: white;
+        border-radius: 16px;
+        overflow: hidden;
+      }
+
+      .summary-banner {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 120px;
+        background: linear-gradient(135deg, #3b82f6, #60a5fa);
+      }
+
+      .summary-content {
+        position: relative;
+        z-index: 1;
+        padding-top: 3rem;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 2rem;
+      }
+
+      .summary-item {
+        text-align: center;
+        padding: 1.5rem;
+        background: rgba(255, 255, 255, 0.9);
+        border-radius: 12px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+      }
+
+      .summary-icon {
+        font-size: 2rem;
+        color: #3b82f6;
+        margin-bottom: 1rem;
+      }
+
+      .summary-number {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #1f2937;
+        margin-bottom: 0.5rem;
+      }
+
+      .bank-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 1.5rem;
+        padding: 0.5rem;
+        text-align: center;
+      }
+
+      .bank-card {
+        background: white;
+        border-radius: 16px;
+        padding: 1.5rem;
+        border: 1px solid #e5e7eb;
+        transition: all 0.3s ease;
+      }
+
+      .bank-card:hover {
+        border-color: #3b82f6;
+        box-shadow: 0 4px 12px rgba(59, 130, 246, 0.1);
+      }
+
+      .bank-icon {
+        width: 48px;
+        height: 48px;
+        background: #f0f9ff;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #3b82f6;
+        margin-bottom: 1rem;
+        margin-left: 140px;
+      }
+
+      .bank-details {
+        margin-bottom: 0.5rem;
+      }
+
+      .bank-label {
+        font-size: 0.875rem;
+        color: #6b7280;
+        margin-bottom: 0.25rem;
+      }
+
+      .bank-value {
+        font-size: 1rem;
+        color: #374151;
+      }
+
+      .buttons-container {
+        display: grid;
+        gap: 1rem;
+        padding: 0.5rem;
+      }
+
+      .btn {
+        padding: 0.875rem 1.5rem;
+        border-radius: 12px;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        transition: all 0.3s ease;
+      }
+
+      .btn-primary {
+        background: #3b82f6;
+        border: none;
+      }
+
+      .btn-primary:hover {
+        background: #2563eb;
+        transform: translateY(-2px);
+      }
+
+      .btn-danger {
+        background: #ef4444;
+        border: none;
+        
+      }
+
+      .btn-danger:hover {
+        background: #dc2626;
+        transform: translateY(-2px);
+      }
+
+      @media (max-width: 768px) {
+        .bank-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .summary-content {
+          grid-template-columns: 1fr;
+          gap: 1rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    {%extends "base.html"%} {%block content%}
+
+    <div class="main-container">
+      <!-- Summary Header -->
+      <div class="card summary-header mb-4">
+        <div class="summary-banner"></div>
+        <div class="summary-content">
+          <div class="summary-item">
+            <i class="fas fa-university summary-icon"></i>
+            <div class="summary-number">{{ user.bank_accounts|length }}</div>
+            <div class="text-muted">Total Accounts</div>
+          </div>
+          <div class="summary-item">
+            <i class="fas fa-check-circle summary-icon"></i>
+            <div class="summary-number">Active</div>
+            <div class="text-muted">Account Status</div>
+          </div>
+          <div class="summary-item">
+            <i class="fas fa-user summary-icon"></i>
+            <div class="summary-number">{{ user.name }}</div>
+            <div class="text-muted">Account Holder</div>
+          </div>
+        </div>
+      </div>
+      <!-- Bank Cards Grid -->
+      <div class="bank-grid mb-4">
+        {% for bank in bank_accounts %}
+        <div class="bank-card">
+          <a href="{{url_for('financetracker')}}" style="text-decoration: none;">
+          <div class="bank-icon">
+            <i class="fas fa-university"></i>
+          </div>
+          <h6 class="mb-3">Account {{ loop.index }}</h6>
+
+          <div class="bank-details">
+            <div class="bank-label">Account Number</div>
+            <div class="bank-value">********{{ bank.bankaccount[-4:] }}</div>
+          </div>
+
+          <div class="bank-details">
+            <div class="bank-label">IFSC Code</div>
+            <div class="bank-value">{{ bank.ifsc }}</div>
+          </div>
+
+          <div class="bank-details">
+            <div class="bank-label">Bank Name</div>
+            <div class="bank-value">{{ bank.bname }}</div>
+          </div>
+        </a>
+
+          <!-- Delete Button -->
+          <form
+            action="{{ url_for('delete_bank', bank_account_number=bank.bankaccount) }}"
+            method="POST"
+            style="margin-top: 1rem"
+          >
+            <button type="submit" class="btn btn-danger" style="margin-left: 80px;">
+              <i class="fas fa-trash-alt"></i>
+              Delete Account
+            </button>
+          </form>
+        </div>
+        {% endfor %}
+      </div>
+      <!-- Action Buttons -->
+      <div class="buttons-container">
+        <a href="{{ url_for('profile') }}" class="btn btn-primary">
+          
+          Go to profile
+        </a>
+        <a href="{{ url_for('addbank') }}" class="btn btn-primary">
+          <i class="fas fa-plus-circle"></i>
+          Add New Bank Account
+        </a>
+        <a href="{{ url_for('logout') }}" class="btn btn-danger">
+          <i class="fas fa-sign-out-alt"></i>
+          Logout
+        </a>
+      </div>
+    </div>
+    {%endblock%}
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>

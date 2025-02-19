@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sign Up - Finance Tracker</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Poppins", sans-serif;
+      }
+
+      body {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        background: linear-gradient(-45deg, #43cea2, #185a9d, #3494e6, #45b649);
+        background-size: 400% 400%;
+        animation: gradientBG 15s ease infinite;
+      }
+
+      @keyframes gradientBG {
+        0% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
+        100% {
+          background-position: 0% 50%;
+        }
+      }
+
+      .signup-container {
+        background: rgba(255, 255, 255, 0.95);
+        padding: 3rem;
+        border-radius: 20px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        width: 600px;
+        text-align: center;
+        margin: 2rem;
+        backdrop-filter: blur(10px);
+        transform: translateY(0);
+        animation: containerFloat 1s ease-out;
+      }
+
+      @keyframes containerFloat {
+        0% {
+          opacity: 0;
+          transform: translateY(50px);
+        }
+        100% {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      h2 {
+        margin-bottom: 2rem;
+        color: #185a9d;
+        font-size: 2.5rem;
+        font-weight: 600;
+        position: relative;
+        padding-bottom: 10px;
+      }
+
+      h2::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 50px;
+        height: 3px;
+        background: linear-gradient(to right, #43cea2, #185a9d);
+        border-radius: 2px;
+      }
+
+      .input-group {
+        margin-bottom: 1.5rem;
+        text-align: left;
+        position: relative;
+        animation: slideUp 0.5s ease-out forwards;
+        opacity: 0;
+      }
+
+      @keyframes slideUp {
+        0% {
+          transform: translateY(20px);
+          opacity: 0;
+        }
+        100% {
+          transform: translateY(0);
+          opacity: 1;
+        }
+      }
+
+      .input-group:nth-child(1) {
+        animation-delay: 0.2s;
+      }
+      .input-group:nth-child(2) {
+        animation-delay: 0.3s;
+      }
+      .input-group:nth-child(3) {
+        animation-delay: 0.4s;
+      }
+      .input-group:nth-child(4) {
+        animation-delay: 0.5s;
+      }
+
+      .input-group label {
+        display: block;
+        font-weight: 500;
+        margin-bottom: 0.5rem;
+        color: #333;
+        transition: color 0.3s ease;
+      }
+
+      .input-group input {
+        width: 100%;
+        padding: 12px 16px;
+        border: 2px solid #e1e1e1;
+        border-radius: 12px;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        background: rgba(255, 255, 255, 0.9);
+      }
+
+      .input-group input:focus {
+        outline: none;
+        border-color: #43cea2;
+        box-shadow: 0 0 0 3px rgba(67, 206, 162, 0.1);
+      }
+
+      .input-group input:hover {
+        border-color: #43cea2;
+      }
+
+      .btn {
+        width: 100%;
+        padding: 14px;
+        background: linear-gradient(45deg, #43cea2, #185a9d);
+        color: white;
+        border: none;
+        border-radius: 12px;
+        font-size: 1.1rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+        animation: slideUp 0.5s ease-out 0.6s forwards;
+        opacity: 0;
+      }
+
+      .btn::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          120deg,
+          transparent,
+          rgba(255, 255, 255, 0.2),
+          transparent
+        );
+        transition: 0.5s;
+      }
+
+      .btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(67, 206, 162, 0.3);
+      }
+
+      .btn:hover::before {
+        left: 100%;
+      }
+
+      .login-link {
+        margin-top: 1.5rem;
+        display: inline-block;
+        color: #185a9d;
+        text-decoration: none;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        animation: slideUp 0.5s ease-out 0.7s forwards;
+        opacity: 0;
+      }
+
+      .login-link:hover {
+        color: #43cea2;
+        transform: translateY(-1px);
+      }
+
+      .footer {
+        margin-top: auto;
+        text-align: center;
+        padding: 1.5rem;
+        background: rgba(0, 0, 0, 0.1);
+        width: 100%;
+        color: white;
+        backdrop-filter: blur(5px);
+      }
+
+      /* Responsive Design */
+      @media (max-width: 768px) {
+        .signup-container {
+          width: 90%;
+          padding: 2rem;
+          margin: 1rem;
+        }
+
+        h2 {
+          font-size: 2rem;
+        }
+      }
+
+      /* Input Validation Styling */
+      input:invalid {
+        border-color: #ff6b6b;
+      }
+
+      input:valid {
+        border-color: #43cea2;
+      }
+    </style>
+  </head>
+  <body>
+    {% extends "base.html" %} {% block content %}
+    <div class="signup-container">
+      <h2>Sign Up</h2>
+      <form method="POST" action="{{ url_for('register') }}">
+        <div class="input-group">
+          <label for="name">Full Name</label>
+          <input type="text" id="name" required name="name" />
+        </div>
+        <div class="input-group">
+          <label for="phone">Phone Number</label>
+          <input type="number" id="phone" required name="mobile" />
+        </div>
+        <div class="input-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" required name="email" />
+        </div>
+        <div class="input-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" required name="password" />
+        </div>
+        <button type="submit" class="btn">Sign Up</button>
+      </form>
+      <a href="#" class="login-link">Already have an account? Log in</a>
+    </div>
+    {% endblock %}
+  </body>
+</html>
